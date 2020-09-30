@@ -18,6 +18,7 @@ typedef struct serv_t {
     pthread_mutex_t new_connection_fd_lock;
     pthread_cond_t  new_connection;
     int             new_connection_fd;
+    pthread_cond_t  connection_accepted;
     pthread_t*      p_thread_ids;
 } serv_t;
 

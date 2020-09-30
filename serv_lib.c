@@ -351,6 +351,7 @@ void* thread_handler(void* args)
         }
         thread_client_fd = p_serv->new_connection_fd;
         p_serv->new_connection_fd = 0;
+        pthread_cond_signal(&(p_serv->connection_accepted));
         pthread_mutex_unlock(&(p_serv->new_connection_fd_lock));
 
         // In the case of a pthread cond broadcast for exiting the server.

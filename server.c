@@ -202,6 +202,14 @@ int main(int argc, char** argv)
         {
             pthread_cond_signal(&(g_serv.new_connection));
         }
+        // Wait for notification that a thread successfully pulled the FD
+        // before continuing.
+        //
+        while (0 != g_serv.new_connection_fd)
+        {
+            pthread_cond_wait(&(g_serv.connection_accepted),
+                              &(g_serv.new_connection_fd_lock));
+        }
         pthread_mutex_unlock(&(g_serv.new_connection_fd_lock));
     }
     
